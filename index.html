@@ -3,54 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نظام البنية التحتية لتكنولوجيا المعلومات</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      direction: rtl;
-      background-color: #f0f0f0;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #0077aa;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    nav {
-      background-color: #005577;
-      text-align: center;
-    }
-    nav a {
-      color: white;
-      padding: 15px;
-      display: inline-block;
-      text-decoration: none;
-    }
-    nav a:hover {
-      background-color: #003344;
-    }
-    main {
-      padding: 20px;
-    }
-  </style>
+  <title>موقع محمد طه لحفظ البيانات</title>
 </head>
 <body>
+  <h1>مرحبا بكم في موقع محمد طه</h1>
+  <p>قم بإدخال البيانات التالية لحفظها في قاعدة البيانات.</p>
 
-  <header>
-    <h1>مرحبًا في نظام البنية التحتية لتكنولوجيا المعلومات</h1>
-  </header>
+  <form id="userForm">
+    <label for="user-id">رقم المستخدم (ID):</label><br>
+    <input type="text" id="user-id" required><br><br>
 
-  <nav>
-    <a href="index.html">الصفحة الرئيسية</a>
-    <a href="storage.html">تخزين البيانات</a>
-  </nav>
+    <label for="user-name">الاسم:</label><br>
+    <input type="text" id="user-name" required><br><br>
 
-  <main>
-    <h2>معلومات عن تكنولوجيا المعلومات</h2>
-    <p>هذا الموقع يعرض معلومات عن إدارة وتخزين البيانات ومفاهيم البنية التحتية لتكنولوجيا المعلومات.</p>
-  </main>
+    <label for="user-email">البريد الإلكتروني:</label><br>
+    <input type="email" id="user-email" required><br><br>
 
+    <label for="user-phone">رقم الهاتف:</label><br>
+    <input type="tel" id="user-phone" required><br><br>
+
+    <button type="button" onclick="handleSaveData()">تخزين البيانات</button>
+  </form>
+
+  <script type="module">
+    // استيراد Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+    // إعدادات Firebase الخاصة بك
+    const firebaseConfig = {
+      apiKey: "AIzaSyDFuk2hFBDPDMfHHHQyASkR8VRYcoFNPXQ",
+      authDomain: "my-dada-1bbf7.firebaseapp.com",
+      databaseURL: "https://my-dada-1bbf7-default-rtdb.firebaseio.com",
+      projectId: "my-dada-1bbf7",
+      storageBucket: "my-dada-1bbf7.appspot.com",
+      messagingSenderId: "502973588428",
+      appId: "1:502973588428:web:7c3a3cffed551ee63a7369",
+      measurementId: "G-Q264WE6FS6"
+    };
+
+    // تهيئة التطبيق
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // دالة لحفظ البيانات
+    window.handleSaveData = function() {
+      const id = document.getElementById("user-id").value;
+      const name = document.getElementById("user-name").value;
+      const email = document.getElementById("user-email").value;
+      const phone = document.getElementById("user-phone").value;
+
+      set(ref(db, 'users/' + id), {
+        username: name,
+        email: email,
+        phone: phone
+      })
+      .then(() => {
+        alert("تم حفظ البيانات بنجاح!");
+        document.getElementById("userForm").reset();
+      })
+      .catch((error) => {
+        alert("حدث خطأ أثناء حفظ البيانات: " + error.message);
+      });
+    }
+  </script>
 </body>
 </html>
