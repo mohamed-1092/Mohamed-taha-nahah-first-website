@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تخزين البيانات</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #0077aa;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #005577;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      padding: 15px;
+      display: inline-block;
+      text-decoration: none;
+    }
+    nav a:hover {
+      background-color: #003344;
+    }
+    main {
+      padding: 20px;
+    }
+    form {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      margin: auto;
+    }
+    input[type="text"], input[type="email"], input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #0077aa;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #005577;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>تخزين البيانات</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">الصفحة الرئيسية</a>
+    <a href="storage.html">تخزين البيانات</a>
+  </nav>
+
+  <main>
+    <h2>أدخل البيانات لتخزينها:</h2>
+    <form action="#" method="post">
+      <label for="name">الاسم:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">البريد الإلكتروني:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">رقم الهاتف:</label>
+      <input type="number" id="phone" name="phone" required>
+
+      <button type="submit">تخزين البيانات</button>
+    </form>
+  </main>
+
+</body>
+</html>
