@@ -1,71 +1,49 @@
 <!DOCTYPE html>
-<html lang="ar">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>موقع محمد طه لحفظ البيانات</title>
-</head>
-<body>
-  <h1>مرحبا بكم في موقع محمد طه</h1>
-  <p>قم بإدخال البيانات التالية لحفظها في قاعدة البيانات.</p>
+<html>
+  <head>
+    <title>موقع محمد طه MIS</title>
+  </head>
+  <body>
+    <h1>تخزين البيانات</h1>
 
-  <form id="userForm">
-    <label for="user-id">رقم المستخدم (ID):</label><br>
-    <input type="text" id="user-id" required><br><br>
+    <input type="text" id="name" placeholder="الاسم" />
+    <input type="email" id="email" placeholder="الإيميل" />
+    <button onclick="saveData()">تخزين</button>
 
-    <label for="user-name">الاسم:</label><br>
-    <input type="text" id="user-name" required><br><br>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics.js";
+      import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
-    <label for="user-email">البريد الإلكتروني:</label><br>
-    <input type="email" id="user-email" required><br><br>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDFuk2hFBDPDMfHHHQyASkR8VRYcoFNPXQ",
+        authDomain: "my-dada-1bbf7.firebaseapp.com",
+        projectId: "my-dada-1bbf7",
+        storageBucket: "my-dada-1bbf7.appspot.com",
+        messagingSenderId: "502973588428",
+        appId: "1:502973588428:web:7c3a3cffed551ee63a7369",
+        measurementId: "G-Q264WE6FS6"
+      };
 
-    <label for="user-phone">رقم الهاتف:</label><br>
-    <input type="tel" id="user-phone" required><br><br>
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const database = getDatabase(app);
 
-    <button type="button" onclick="handleSaveData()">تخزين البيانات</button>
-  </form>
+      function saveData() {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
 
-  <script type="module">
-    // استيراد Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-
-    // إعدادات Firebase الخاصة بك
-    const firebaseConfig = {
-      apiKey: "AIzaSyDFuk2hFBDPDMfHHHQyASkR8VRYcoFNPXQ",
-      authDomain: "my-dada-1bbf7.firebaseapp.com",
-      databaseURL: "https://my-dada-1bbf7-default-rtdb.firebaseio.com",
-      projectId: "my-dada-1bbf7",
-      storageBucket: "my-dada-1bbf7.appspot.com",
-      messagingSenderId: "502973588428",
-      appId: "1:502973588428:web:7c3a3cffed551ee63a7369",
-      measurementId: "G-Q264WE6FS6"
-    };
-
-    // تهيئة التطبيق
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // دالة لحفظ البيانات
-    window.handleSaveData = function() {
-      const id = document.getElementById("user-id").value;
-      const name = document.getElementById("user-name").value;
-      const email = document.getElementById("user-email").value;
-      const phone = document.getElementById("user-phone").value;
-
-      set(ref(db, 'users/' + id), {
-        username: name,
-        email: email,
-        phone: phone
-      })
-      .then(() => {
-        alert("تم حفظ البيانات بنجاح!");
-        document.getElementById("userForm").reset();
-      })
-      .catch((error) => {
-        alert("حدث خطأ أثناء حفظ البيانات: " + error.message);
-      });
-    }
-  </script>
-</body>
+        set(ref(database, "users/" + name), {
+          username: name,
+          email: email
+        })
+          .then(() => {
+            alert("تم حفظ البيانات بنجاح!");
+          })
+          .catch((error) => {
+            alert("حصل خطأ: " + error);
+          });
+      }
+    </script>
+  </body>
 </html>
