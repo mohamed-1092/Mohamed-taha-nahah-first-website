@@ -2,19 +2,19 @@
 <html>
   <head>
     <title>موقع محمد طه MIS</title>
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   </head>
   <body>
     <h1>تخزين البيانات</h1>
 
-    <input type="text" id="name" placeholder="الاسم" />
-    <input type="email" id="email" placeholder="الإيميل" />
+    <input type="text" id="name" placeholder="الاسم">
+    <input type="email" id="email" placeholder="الإيميل">
     <button onclick="saveData()">تخزين</button>
 
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics.js";
-      import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
-
+    <script>
+      // إعداد Firebase
       const firebaseConfig = {
         apiKey: "AIzaSyDFuk2hFBDPDMfHHHQyASkR8VRYcoFNPXQ",
         authDomain: "my-dada-1bbf7.firebaseapp.com",
@@ -25,24 +25,21 @@
         measurementId: "G-Q264WE6FS6"
       };
 
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      const database = getDatabase(app);
+      firebase.initializeApp(firebaseConfig);
+      const database = firebase.database();
 
       function saveData() {
         const name = document.getElementById("name").value;
         const email = document.getElementById("email").value;
 
-        set(ref(database, "users/" + name), {
+        firebase.database().ref("users/" + name).set({
           username: name,
           email: email
-        })
-          .then(() => {
-            alert("تم حفظ البيانات بنجاح!");
-          })
-          .catch((error) => {
-            alert("حصل خطأ: " + error);
-          });
+        }).then(() => {
+          alert("تم حفظ البيانات بنجاح!");
+        }).catch((error) => {
+          alert("حصل خطأ: " + error.message);
+        });
       }
     </script>
   </body>
