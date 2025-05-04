@@ -7,7 +7,6 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      direction: rtl;
       background-color: #f0f0f0;
       margin: 0;
       padding: 0;
@@ -15,32 +14,19 @@
     header {
       background-color: #0077aa;
       color: white;
+      text-align: center;
       padding: 20px;
-      text-align: center;
-    }
-    nav {
-      background-color: #005577;
-      text-align: center;
-    }
-    nav a {
-      color: white;
-      padding: 15px;
-      display: inline-block;
-      text-decoration: none;
-    }
-    nav a:hover {
-      background-color: #003344;
     }
     main {
       padding: 20px;
     }
     form {
-      background-color: #ffffff;
+      background-color: white;
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       width: 300px;
       margin: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
     input[type="text"], input[type="email"], input[type="number"] {
       width: 100%;
@@ -55,11 +41,7 @@
       padding: 10px 20px;
       border: none;
       border-radius: 5px;
-      cursor: pointer;
       width: 100%;
-    }
-    button:hover {
-      background-color: #005577;
     }
   </style>
 </head>
@@ -69,14 +51,8 @@
     <h1>تخزين البيانات</h1>
   </header>
 
-  <nav>
-    <a href="index.html">الصفحة الرئيسية</a>
-    <a href="storage.html">تخزين البيانات</a>
-  </nav>
-
   <main>
-    <h2>أدخل البيانات لتخزينها:</h2>
-    <form action="#" method="post">
+    <form id="dataForm">
       <label for="name">الاسم:</label>
       <input type="text" id="name" name="name" required>
 
@@ -89,6 +65,28 @@
       <button type="submit">تخزين البيانات</button>
     </form>
   </main>
+
+  <script>
+    document.getElementById('dataForm').addEventListener('submit', function(event) {
+      event.preventDefault();  // Prevent form from submitting
+
+      // Get data from the form
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+
+      // Store the data in LocalStorage
+      localStorage.setItem('name', name);
+      localStorage.setItem('email', email);
+      localStorage.setItem('phone', phone);
+
+      // Display a message to confirm data storage
+      alert('تم تخزين البيانات بنجاح!');
+      
+      // Optionally, clear the form
+      document.getElementById('dataForm').reset();
+    });
+  </script>
 
 </body>
 </html>
