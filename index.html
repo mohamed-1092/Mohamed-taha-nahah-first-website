@@ -1,46 +1,56 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>موقع محمد طه MIS</title>
-    <!-- Firebase CDN -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  </head>
-  <body>
-    <h1>تخزين البيانات</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supabase Example</title>
+    <!-- استيراد مكتبة Supabase من CDN -->
+    <script type="module">
+        // استيراد المكتبة الخاصة بـ Supabase
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-    <input type="text" id="name" placeholder="الاسم">
-    <input type="email" id="email" placeholder="الإيميل">
-    <button onclick="saveData()">تخزين</button>
+        // رابط الـ API الخاص بمشروعك في Supabase
+        const supabaseUrl = 'https://ndvnrsyllonwfifzlvrb.supabase.co';  // استبدل الرابط هنا إذا كنت تستخدم رابط آخر
+        // الـ API Key الخاص بك
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5kdm5yc3lsbG9ud2ZpZnpsdnJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYzODEyOTIsImV4cCI6MjA2MTk1NzI5Mn0.DhO7mAQ33VjcycbBhmv5yNBB69gxLto-tHOdFWG4agY';  // استبدل بكود الـ API الخاص بك
 
-    <script>
-      // إعداد Firebase
-      const firebaseConfig = {
-        apiKey: "AIzaSyDFuk2hFBDPDMfHHHQyASkR8VRYcoFNPXQ",
-        authDomain: "my-dada-1bbf7.firebaseapp.com",
-        projectId: "my-dada-1bbf7",
-        storageBucket: "my-dada-1bbf7.appspot.com",
-        messagingSenderId: "502973588428",
-        appId: "1:502973588428:web:7c3a3cffed551ee63a7369",
-        measurementId: "G-Q264WE6FS6"
-      };
+        // إنشاء العميل الخاص بـ Supabase
+        const supabase = createClient(supabaseUrl, supabaseKey);
 
-      firebase.initializeApp(firebaseConfig);
-      const database = firebase.database();
+        async function storeData() {
+            // جلب القيم من العناصر في الصفحة
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
 
-      function saveData() {
-        const name = document.getElementById("name").value;
-        const email = document.getElementById("email").value;
+            // إدخال البيانات إلى قاعدة البيانات في Supabase
+            const { data, error } = await supabase
+                .from('users')  // تحديد الجدول الذي سيتم تخزين البيانات فيه
+                .insert([
+                    { name: name, email: email }  // تخزين البيانات
+                ]);
 
-        firebase.database().ref("users/" + name).set({
-          username: name,
-          email: email
-        }).then(() => {
-          alert("تم حفظ البيانات بنجاح!");
-        }).catch((error) => {
-          alert("حصل خطأ: " + error.message);
-        });
-      }
+            // عرض النتيجة في حالة وجود خطأ أو نجاح
+            if (error) {
+                console.log("Error storing data: ", error);
+                alert("Error storing data!");
+            } else {
+                console.log("Data stored successfully: ", data);
+                alert("Data saved successfully!");
+            }
+        }
     </script>
-  </body>
+</head>
+<body>
+
+    <h2>Save User Information</h2>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <button onclick="storeData()">Store Data</button>
+
+</body>
 </html>
